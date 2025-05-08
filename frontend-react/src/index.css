@@ -68,7 +68,7 @@ td {
 }
 
 .formx button {
-  background-color: #ff9800;
+  background-color: #61dbfb;
   color: #000000;
   font-weight: bold;
   cursor: pointer;
@@ -76,7 +76,7 @@ td {
 }
 
 .formx button:hover {
-  background-color: #e68900;
+  opacity: 0.8;
 }
 
 /* Abstände und zentrierte Inhalte */
@@ -116,12 +116,21 @@ header {
   background-color: #151515;
   color: white;
   text-align: center;
-  padding: 15px 0;
+  justify-content: space-between;
+  padding: 15px;
   font-family: 'Brush Script MT';
   font-size: 50px;
   text-shadow: #FC0 1px 0 5px;
   z-index: 1000;
   box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
+}
+
+.header-logo {
+  position: fixed;
+  padding: 15px 30px;
+  width: 38px;             
+  height: auto;
+  filter: drop-shadow(0 0 3px #00d8ff);
 }
 
 footer {
@@ -185,7 +194,7 @@ footer {
 }
 
 .config-box button:first-of-type {
-  background-color: #ff9800;
+  background-color: #61dbfb;
   color: black;
 }
 
@@ -210,3 +219,4 @@ footer {
   font-size: 0.9rem;
   margin-bottom: 10px;
 }
+

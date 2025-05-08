@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchConfig } from './config';
+import reactLogo from './assets/react_icon.svg'; 
 
 type Item = { name: string; amount: number };
 
@@ -112,7 +113,14 @@ function App() {
 
   return (
     <>
-      <header>Shopping List Manager</header>
+      <header className="app-header">
+      <span>Shopping List Manager</span>
+
+      {/* Rechtsbündiges Logo */}
+      <img src={reactLogo}
+           alt="React logo"
+           className="header-logo" />
+    </header>
 
       <div className="main-wrapper">
         <div className="container">
@@ -188,7 +196,7 @@ function App() {
       </div>
 
       <footer>
-        <p>&copy; Parallel Systems Study Project by Philipp Schlosser.</p>
+        <p>&copy; Parallel Systems Study Project by Philipp Schlosser</p>
       </footer>
     </>
   );

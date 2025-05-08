@@ -13,8 +13,7 @@ export async function fetchConfig(): Promise<Config> {
 
   if (!loaded.apiUrl || loaded.apiUrl.trim() === '') {
     const host = window.location.hostname;
-    // Beispiel: Port 5001 → 5000 (Backend)
-    const backendHost = host.replace('-5001', '-5000');
+    const backendHost = host.replace('-6000', '-5000');
     loaded.apiUrl = `https://${backendHost}`;
   }
 

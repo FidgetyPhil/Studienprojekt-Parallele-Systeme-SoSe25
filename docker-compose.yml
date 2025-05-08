@@ -1,45 +1,73 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  shoppingdb-container:
+  # ---------- Datenbanken ----------
+  db-a:
     image: postgres:17
-    container_name: shoppingdb-container
+    container_name: db-a
     restart: always
-    ports:
-      - "${DB_PORT}:5432"
-    env_file:
-      - .env
+    env_file: [.env]
+    environment:
+      POSTGRES_USER: hse24
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shoppingdb_a
+    ports: ["${DB_PORT}:5432"]
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  backend:
-    build: ./backend
-    container_name: backend-container
+      - ./db/init-db-a.sql:/docker-entrypoint-initdb.d/init.sql
+  db-b:
+    image: postgres:17
+    container_name: db-b
     restart: always
-    ports:
-      - "${BACKEND_PORT}:8080"
-    env_file:
-      - .env
-    depends_on:
-      - shoppingdb-container
+    env_file: [.env]
+    environment:
+      POSTGRES_USER: hse24
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shoppingdb_b
+    volumes:
+      - ./db/init-db-b.sql:/docker-entrypoint-initdb.d/init.sql
 
+  # ---------- Backends ----------
+  backend-a:
+    build: ./backend
+    container_name: backend-a
+    restart: always
+    env_file: [.env]
+    environment:
+      DB_HOST: db-a
+      DB_USER: hse24
+      DB_PASSWORD: password
+      DB_NAME: shoppingdb_a
+    depends_on: [ db-a ]
+    ports: [ "${BACKEND_A_PORT}:8080" ]
+
+  backend-b:
+    build: ./backend
+    container_name: backend-b
+    restart: always
+    env_file: [.env]
+    environment:
+      DB_HOST: db-b
+      DB_USER: hse24
+      DB_PASSWORD: password
+      DB_NAME: shoppingdb_b
+    depends_on: [ db-b ]
+    ports: [ "${BACKEND_B_PORT}:8080" ]
+
+  # ---------- Frontends ----------
   frontend-react:
     build: ./frontend-react
-    container_name: frontend-react-container
+    container_name: frontend-react
     restart: always
-    ports:
-      - "${FRONTEND_REACT_PORT}:80"
-    depends_on:
-      - backend
+    ports: [ "${FRONTEND_REACT_PORT}:80" ]
+    depends_on: [ backend-a ]            # ein Backend reicht zum Start
 
   frontend-angular:
     build: ./frontend-angular
-    container_name: frontend-angular-container
+    container_name: frontend-angular
     restart: always
-    ports:
-      - "${FRONTEND_ANGULAR_PORT}:80"
-    depends_on:
-      - backend
+    ports: [ "${FRONTEND_ANGULAR_PORT}:80" ]
+    depends_on: [ backend-a ]
 
 volumes:
-  postgres_data:
+  db_a_data:
+  db_b_data:
