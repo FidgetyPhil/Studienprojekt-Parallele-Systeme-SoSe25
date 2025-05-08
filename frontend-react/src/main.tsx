@@ -1,9 +1,10 @@
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
-import { loadConfig } from './config';
+import { fetchConfig } from './config';
 import './index.css';
 
-loadConfig()
+// Initiale Konfiguration laden, dann App starten
+fetchConfig()
   .then(() => {
     const root = ReactDOM.createRoot(document.getElementById('root')!);
     root.render(<App />);
