@@ -28,6 +28,9 @@ func connectToDatabase() {
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 
+	log.Printf("DB_HOST=%s DB_NAME=%s DB_USER=%s DB_PASSWORD=%s", dbHost, dbName, dbUser, dbPassword)
+
+
 	// Fallback für fehlende Umgebungsvariablen
 	if dbHost == "" || dbUser == "" || dbPassword == "" || dbName == "" {
 		log.Fatalf("Database configuration incomplete. Ensure DB_HOST, DB_USER, DB_PASSWORD, and DB_NAME are set.")
