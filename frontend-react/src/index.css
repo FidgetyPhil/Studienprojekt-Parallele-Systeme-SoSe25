@@ -220,3 +220,62 @@ footer {
   margin-bottom: 10px;
 }
 
+.info-box {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  color: white;
+  font-size: 0.9rem;
+}
+
+.info-box ul {
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.info-box code {
+  background-color: #2a2a2a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.right-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 320px;
+}
+
+.info-box button {
+  margin-left: 10px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.info-box button:hover {
+  background-color: #025569;
+}
+
+.backend-switch {
+  margin-left: 10px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #61dbfb;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backend-switch.active {
+  background-color: rgb(0, 192, 42);
+  color: white;
+  font-weight: bold;
+}

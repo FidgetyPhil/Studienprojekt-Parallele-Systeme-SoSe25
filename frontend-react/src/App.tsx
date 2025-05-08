@@ -14,6 +14,8 @@ function App() {
   const [defaultApiUrl, setDefaultApiUrl] = useState<string>('');
   const [customApiUrl, setCustomApiUrl] = useState<string>('');
   const [configError, setConfigError] = useState<string | null>(null);
+  const [manualApiInput, setManualApiInput] = useState('');
+
 
   const getCurrentApiUrl = () => customApiUrl || defaultApiUrl;
 
@@ -23,7 +25,11 @@ function App() {
       const config = await fetchConfig();
       setDefaultApiUrl(config.apiUrl);
       const stored = localStorage.getItem('apiUrl');
-      setCustomApiUrl(stored || config.apiUrl);
+      
+      if (stored) {
+        setCustomApiUrl(stored);
+      }
+      
       setConfigError(null);
     } catch (err) {
       setConfigError('Fehler beim Laden der Konfiguration');
@@ -47,14 +53,16 @@ function App() {
 
   // URL speichern und Daten neu laden
   const applyCustomUrl = async () => {
-    localStorage.setItem('apiUrl', customApiUrl);
-    await loadItems(customApiUrl);
+    localStorage.setItem('apiUrl', manualApiInput);
+    setCustomApiUrl(manualApiInput);
+    await loadItems(manualApiInput);
   };
 
   // Zurücksetzen auf Standard-URL
   const resetUrl = async () => {
     localStorage.removeItem('apiUrl');
     setCustomApiUrl(defaultApiUrl);
+    setManualApiInput('');
     await loadItems(defaultApiUrl);
   };
 
@@ -173,17 +181,18 @@ function App() {
           </form>
         </div>
 
+        <div className="right-wrapper">
         <div className="config-box">
           <h4>⚙️ Konfiguration</h4>
 
           <label htmlFor="api-url-input">Manuelle API-URL:</label>
           <input
-            id="api-url-input"
-            type="text"
-            value={customApiUrl}
-            onChange={e => setCustomApiUrl(e.target.value)}
-            placeholder="https://example.com"
-          />
+  id="api-url-input"
+  type="text"
+  value={manualApiInput}
+  onChange={e => setManualApiInput(e.target.value)}
+  placeholder="https://example.com"
+/>
 
           <button onClick={applyCustomUrl}>Anwenden</button>
           <button onClick={resetUrl}>🔄 Standard-Konfiguration laden</button>
@@ -193,7 +202,49 @@ function App() {
             {(!getCurrentApiUrl() || configError) && <span style={{ color: 'red' }}>⚠️</span>}
           </p>
         </div>
+        <div className="info-box">
+  <h4>🔌 Backend-Instanzen</h4>
+  <ul>
+    <li>
+      <strong>Backend A:</strong> <code>Port 5000</code>
+      <button
+        className={`backend-switch ${getCurrentApiUrl().includes('5000') ? 'active' : ''}`}
+        onClick={async () => {
+          const hostname = window.location.hostname;
+          const newUrl = `https://${hostname.replace('-6000', '-5000')}`;
+          setCustomApiUrl(newUrl);
+          localStorage.setItem('apiUrl', newUrl);
+          await loadItems(newUrl);
+        }}
+      >
+        {getCurrentApiUrl().includes('5000') ? 'Aktiv' : 'Verbinden mit Backend A'}
+      </button>
+    </li>
+    <li>
+      <strong>Backend B:</strong> <code>Port 5001</code>
+      <button
+        className={`backend-switch ${getCurrentApiUrl().includes('5001') ? 'active' : ''}`}
+        onClick={async () => {
+          const hostname = window.location.hostname;
+          const newUrl = `https://${hostname.replace('-6000', '-5001')}`;
+          setCustomApiUrl(newUrl);
+          localStorage.setItem('apiUrl', newUrl);
+          await loadItems(newUrl);
+        }}
+      >
+        {getCurrentApiUrl().includes('5001') ? 'Aktiv' : 'Verbinden mit Backend B'}
+      </button>
+    </li>
+  </ul>
+</div>
+
+
+        </div>
+        
       </div>
+
+     
+
 
       <footer>
         <p>&copy; Parallel Systems Study Project by Philipp Schlosser</p>
