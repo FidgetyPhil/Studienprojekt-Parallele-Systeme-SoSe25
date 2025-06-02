@@ -2,7 +2,7 @@
 
 This project demonstrates how frontend applications (React & Angular) can dynamically load configuration data at runtime to connect with a backend API, avoiding the need for rebuilds after deployment.
 
-It extends the official lab assignment from the *Parallel and Distributed Systems* course.
+It extends the official lab assignment from our *Parallel and Distributed Systems* course.
 
 ---
 
@@ -31,21 +31,21 @@ This mimics real-world deployment environments with staging, testing, and produc
 
 ## 🧩 System Architecture
 
-- 🔗 **Frontends** are hosted in containers and load `config.json` on startup.
-- 🧠 **API URLs** are editable in the UI and stored in `localStorage`.
-- 🔄 **All requests** are automatically routed through the current backend.
-- 💾 Two separate **PostgreSQL databases** are used for backend isolation.
+- **Frontends** are hosted in containers and load `config.json` on startup.
+- **API URLs** are editable in the UI and stored in `localStorage`.
+- **All requests** are automatically routed through the current backend.
+- Two separate **PostgreSQL databases** are used for backend isolation.
 
 ---
 
 ## 🖥️ Frontend Features
 
-- 🧠 **Dynamic API switching**
-- 📝 Inline configuration editor
-- 🟢 Status indicator for active backend
-- 📱 Responsive layout
-- 🧼 Clear error messages
-- 🛠️ Angular & React side-by-side for educational comparison
+- **Dynamic API switching**
+- Inline configuration editor
+- Status indicator for active backend
+- Responsive layout
+- Clear error messages
+- Angular & React side-by-side for educational comparison
 
 ---
 
@@ -110,6 +110,17 @@ In the frontend UI (both React & Angular):
 
 ---
 
+## 📡 API Endpoints
+
+| Endpoint             | Method | Description                        |
+|-----------------------|--------|------------------------------------|
+| `/items`              | GET    | List all items                     |
+| `/items`              | POST   | Add a new item                     |
+| `/items/:name`        | PUT    | Update an item (by name)           |
+| `/items/:name`        | DELETE | Delete an item (by name)           |
+
+---
+
 ## 🔌 Port Overview
 
 | Component         | Port | Description           |
@@ -119,7 +130,7 @@ In the frontend UI (both React & Angular):
 | Frontend React   | 6000 | React SPA             |
 | Frontend Angular | 6001 | Angular SPA           |
 | Database A       | 5432 | PostgreSQL            |
-| Database B       | 5433 | PostgreSQL (instance) |
+| Database B       | 5433 | PostgreSQL            |
 
 ---
 
@@ -146,18 +157,18 @@ In the frontend UI (both React & Angular):
 
 This project demonstrates:
 
-✅ Dynamic configuration without redeployment  
-✅ Support for multiple backend instances  
-✅ Frontend-only switching logic  
-✅ Fully containerized infrastructure  
-✅ Practical microservice-like setup in a student project
+- Dynamic configuration without redeployment  
+- Support for multiple backend instances  
+- Frontend-only switching logic  
+- Fully containerized infrastructure  
+- Practical microservice-like setup in a student project
 
 ---
 
 ## 👨‍🏫 Author
 
-Project by Philipp Schlosser
-Course: Parallel and Distributed Systems
-University: Hochschule Esslingen
+#### Project by Philipp Schlosser
+#### Course: Parallel and Distributed Systems
+#### University: Hochschule Esslingen
 
 ---
