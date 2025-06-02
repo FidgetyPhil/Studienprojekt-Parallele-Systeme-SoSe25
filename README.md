@@ -103,8 +103,8 @@ docker exec -it shoppingdb-container psql -U hse24 -d shoppingdb
 In the frontend UI (both React & Angular):
 
 - The user can choose between:
-  - **Backend A** → http://localhost:5000
-  - **Backend B** → http://localhost:5001
+  - **Backend A** → codespace-Url:5000
+  - **Backend B** → codespace-Url:5001
 - Switching updates the internal API URL dynamically.
 - A visual button state reflects which backend is active.
 
