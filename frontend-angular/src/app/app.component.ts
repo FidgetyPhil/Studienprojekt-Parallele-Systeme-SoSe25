@@ -39,6 +39,13 @@ export class AppComponent implements OnInit {
     return this.customApiUrl || this.defaultApiUrl;
   }
 
+  isDarkMode = false;
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark', this.isDarkMode);
+  }
+
   async ngOnInit() {
     const defaultUrl = await this.loadConfig();
     const stored = localStorage.getItem('apiUrl');
