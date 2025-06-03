@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { fetchConfig } from './config';
-import reactLogo from './assets/react_icon.svg'; 
+import reactLogo from './assets/react_icon.svg';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 type Item = { name: string; amount: number };
 
 function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [name, setName] = useState('');
-  const [amount, setAmount] = useState<number>(1);
+  const [amount, setAmount] = useState<number>(1); 
   const [updateName, setUpdateName] = useState('');
   const [updateAmount, setUpdateAmount] = useState<number>(1);
   const [deleteName, setDeleteName] = useState('');
@@ -15,6 +16,7 @@ function App() {
   const [customApiUrl, setCustomApiUrl] = useState<string>('');
   const [configError, setConfigError] = useState<string | null>(null);
   const [manualApiInput, setManualApiInput] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
 
   const getCurrentApiUrl = () => customApiUrl || defaultApiUrl;
@@ -111,6 +113,11 @@ function App() {
     }
   };
 
+  const toggleDarkMode = () => {
+    document.body.classList.toggle('dark');
+    setIsDarkMode(!isDarkMode);
+  };
+
   useEffect(() => {
     (async () => {
       await loadConfig();
@@ -122,13 +129,17 @@ function App() {
   return (
     <>
       <header className="app-header">
-      <span>Shopping List Manager</span>
+        <span>Shopping List Manager</span>
 
-      {/* Rechtsbündiges Logo */}
-      <img src={reactLogo}
+        {/* Rechtsbündiges Logo */}
+        <img src={reactLogo}
            alt="React logo"
            className="header-logo" />
-    </header>
+
+        <button className="darkmode-toggle" onClick={toggleDarkMode}>
+        {isDarkMode ? <FaSun className="icon-sun" /> : <FaMoon className="icon-moon" />}
+        </button>
+      </header>
 
       <div className="main-wrapper">
         <div className="container">

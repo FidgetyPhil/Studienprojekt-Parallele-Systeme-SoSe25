@@ -1,8 +1,18 @@
 /* Allgemeines Styling für Desktop */
+@font-face {
+    font-family: "Harlow Solid Italic";
+    src: url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.eot");
+    src: url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/208c60a0a6b9e5ebbc434f9f24c2aeae.svg#Harlow Solid Italic")format("svg");
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #eeeeee;
+  color: black;
   display: flex;
   justify-content: center;
   margin-left: 12px;
@@ -10,7 +20,7 @@ body {
 
 /* Titel */
 h1, h2 {
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 20px;
   text-align: center;
   font-size: 1.8rem;
@@ -21,8 +31,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  background-color: #2a2a2a;
-  color: #ffffff;
+  background-color: #e0e0e0; /* etwas dunkler für Kontrast */
+  color: #000000;
   border-radius: 8px;
   overflow: hidden;
   table-layout: fixed;
@@ -36,13 +46,14 @@ th, td {
 }
 
 th {
-  background-color: #333333;
-  color: #ffffff;
+  background-color: #d0d0d0;
+  color: #000000;
   font-weight: bold;
 }
 
 td {
-  background-color: #242424;
+  background-color: #e0e0e0;
+  color: #000000;
 }
 
 /* Formular */
@@ -62,8 +73,8 @@ td {
 }
 
 .formx input {
-  background-color: #2a2a2a;
-  color: #ffffff;
+  background-color: #eaeaea;
+  color: #000000;
   flex: 1;
   min-width: 150px;
 }
@@ -106,22 +117,21 @@ button {
   table th, table td {
     font-size: 1.1rem;
   }
-  
 }
 
 header {
+  font-family: 'Harlow Solid Italic';
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #151515;
-  color: white;
+  background-color: rgb(214, 214, 214);
+  color: black;
   text-align: center;
   justify-content: space-between;
   padding: 15px;
-  font-family: 'Brush Script MT';
   font-size: 50px;
-  text-shadow: #FC0 1px 0 5px;
+  text-shadow: rgb(32, 32, 32) 1px 0 5px;
   z-index: 1000;
   box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
 }
@@ -131,7 +141,7 @@ header {
   padding: 15px 30px;
   width: 38px;             
   height: auto;
-  filter: drop-shadow(0 0 3px #00d8ff);
+  filter: drop-shadow(0 0 3px #000000); /* Dunkler Schatten im Bright Mode */
 }
 
 footer {
@@ -154,9 +164,10 @@ footer {
 .container {
   padding: 30px;
   border-radius: 10px;
-  background-color: #1e1e1e;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9; /* Einheitlicher heller Hintergrund */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   min-width: 60%;
+  color: #000000;
 }
 
 /* Konfiguration-Box rechts */
@@ -165,16 +176,16 @@ footer {
   align-self: flex-start;
   padding: 30px;
   border-radius: 10px;
-  background-color: #1e1e1e;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: #f9f9f9; /* Gleich wie container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #000000;
   font-size: 0.9rem;
   min-width: 320px;
 }
 
 .config-box input {
-  background-color: #2a2a2a;
-  color: white;
+  background-color: #eaeaea;
+  color: #000000;
   border: none;
   border-radius: 4px;
   width: 97%;
@@ -194,14 +205,10 @@ footer {
   transition: background-color 0.3s ease;
 }
 
-.config-box button:first-of-type {
+.config-box button:first-of-type,
+.config-box button:nth-of-type(2) {
   background-color: #61dbfb;
   color: black;
-}
-
-.config-box button:nth-of-type(2) {
-  background-color: #555;
-  color: white;
 }
 
 .config-box button:hover {
@@ -222,11 +229,11 @@ footer {
 }
 
 .info-box {
-  background-color: #1e1e1e;
+  background-color: #f9f9f9; /* Gleich wie container */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  color: #000000;
   font-size: 0.9rem;
 }
 
@@ -236,7 +243,7 @@ footer {
 }
 
 .info-box code {
-  background-color: #2a2a2a;
+  background-color: #eaeaea;
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -279,4 +286,122 @@ footer {
   background-color: rgb(0, 192, 42);
   color: white;
   font-weight: bold;
+}
+
+.darkmode-toggle {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.icon-sun {
+  color: white;
+  width: 25px;
+  height: 25px;
+  filter: drop-shadow(0 0 3px #000000);
+}
+
+.icon-moon {
+  color: black;
+  width: 25px;
+  height: 25px;
+  filter: drop-shadow(0 0 3px #ffffff);
+}
+
+/* Dark Mode Anpassungen */
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark header {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  text-shadow: #FC0 1px 0 5px;
+}
+
+body.dark .container,
+body.dark .config-box,
+body.dark .info-box {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+}
+
+body.dark table {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+body.dark th {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark td {
+  background-color: #242424;
+  color: #ffffff;
+}
+
+body.dark .formx input,
+body.dark .config-box input {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+body.dark .formx button,
+body.dark .config-box button,
+body.dark .backend-switch {
+  background-color: #61dbfb;
+  color: #000000;
+}
+
+body.dark .backend-switch.active {
+  background-color: rgb(0, 192, 42);
+  color: white;
+}
+
+body.dark .formx button:hover,
+body.dark .config-box button:hover,
+body.dark .backend-switch:hover,
+body.dark .info-box button:hover {
+  opacity: 0.8;
+}
+
+body.dark .api-status {
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+body.dark .error {
+  color: #ff6b6b;
+}
+
+body.dark .info-box code {
+  background-color: #333333;
+}
+
+body.dark .header-logo {
+  filter: drop-shadow(0 0 3px #00d8ff);
+}
+
+body,
+.container,
+.config-box,
+.info-box,
+header,
+table,
+th,
+td,
+.formx input,
+.formx button,
+.config-box input,
+.config-box button,
+.backend-switch {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
