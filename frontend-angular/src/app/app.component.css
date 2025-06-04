@@ -289,18 +289,8 @@ footer {
   border: none;
 }
 
-.icon-sun {
-  color: white;
-  width: 25px;
-  height: 25px;
-  filter: drop-shadow(0 0 3px #000000);
-}
-
-.icon-moon {
-  color: black;
-  width: 25px;
-  height: 25px;
-  filter: drop-shadow(0 0 3px #ffffff);
+img.invert {
+  filter: invert(1) brightness(1.2);
 }
 
 body.dark {

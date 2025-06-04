@@ -4,7 +4,8 @@
 
   <button class="darkmode-toggle" (click)="toggleDarkMode()">
     <img
-      [src]="isDarkMode ? 'assets/sun.svg' : 'assets/moon.svg'"
+      [attr.src]="isDarkMode ? 'assets/sun.svg' : 'assets/moon.svg'"
+      [ngClass]="{'invert': isDarkMode}"
       alt="Toggle dark mode"
       width="25"
       height="25"
