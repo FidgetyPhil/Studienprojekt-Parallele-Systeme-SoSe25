@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-b-pvc
+  namespace: shopping-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-db-b-sql
+  namespace: shopping-app
+data:
+  init.sql: |
+    CREATE TABLE items (
+      name TEXT PRIMARY KEY,
+      amount INT
+    );
+
+    INSERT INTO items (name, amount) VALUES
+    ('Even', 1000),
+    ('NOW', 2000),
+    ('IT', 3000),
+    ('WORKs', 4000);
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-b
+  namespace: shopping-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-b
+  template:
+    metadata:
+      labels:
+        app: db-b
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17
+          env:
+            - name: POSTGRES_USER
+              value: hse24
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: shoppingdb_b
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: db-b-data
+              mountPath: /var/lib/postgresql/data
+            - name: init-db
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: db-b-data
+          persistentVolumeClaim:
+            claimName: db-b-pvc
+        - name: init-db
+          configMap:
+            name: init-db-b-sql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-b
+  namespace: shopping-app
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: db-b
+  type: ClusterIP

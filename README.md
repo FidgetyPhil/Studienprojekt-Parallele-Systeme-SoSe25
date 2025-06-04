@@ -44,6 +44,7 @@ This mimics real-world deployment environments with staging, testing, and produc
 - Inline configuration editor
 - Status indicator for active backend
 - Responsive layout
+- Dark/Bright Mode option
 - Clear error messages
 - Angular & React side-by-side for educational comparison
 
@@ -78,6 +79,36 @@ chmod +x open-backend-port.sh
 ```bash
 docker compose down
 ```
+---
+
+
+## ☸️ Kubernetes: How Start the App (recommended in Codespaces)
+
+Grant privileges to use the script and run it:
+
+```bash
+chmod +x kubernetes_starter.sh
+./kubernetes_starter.sh
+```
+
+To avoid CORS blocking you have to use the open-backend-port Script:
+
+```bash
+chmod +x open-backend-port.sh
+./open-backend-port.sh
+```
+Checking Pod Health with:
+````
+ kubectl get all -n shopping-app
+````
+To delete the kubernetes config use:
+````
+kubectl delete all --all -n shopping-app
+````
+To delete the minikube cluster use:
+````
+minikube delete
+````
 
 ---
 
@@ -95,6 +126,16 @@ docker exec -it shoppingdb-container psql -U hse24 -d shoppingdb
 \dt   -- List all tables
 \q    -- Exit psql
 ```
+
+---
+
+## Accessing Frontends
+
+You can access two frontends:
+
+- The user can choose between:
+  - **React** → codespace-Url:6000
+  - **Angular** → codespace-Url:6001
 
 ---
 
@@ -139,15 +180,19 @@ In the frontend UI (both React & Angular):
 ```
 ├── backend/
 │   └── main.go
+|── db
+│   └── init-db-*.sql
 ├── frontend-react/
 │   └── src/
 │       └── App.tsx
 ├── frontend-angular/
 │   └── src/app/
 │       └── app.component.ts
+|── k8s
 ├── docker-compose.yml
 ├── .env
 ├── open-backend-port.sh
+|── kubernetes_starter.sh
 └── README.md
 ```
 
