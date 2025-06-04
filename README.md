@@ -13,6 +13,7 @@ It extends the official lab assignment from our *Parallel and Distributed System
 - **Backend A & B:** Go
 - **Databases:** PostgreSQL (2 instances)
 - **Containerization:** Docker
+- **Orchestration:** Kubernetes (Minikube)
 
 ---
 
