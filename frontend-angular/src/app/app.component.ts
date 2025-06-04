@@ -36,8 +36,13 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
+  // Helper: entfernt alle Slashes am Ende der URL
+  cleanUrl(url: string): string {
+    return url.trim().replace(/\/+$/, '');
+  }
+
   getCurrentApiUrl(): string {
-    return this.customApiUrl || this.defaultApiUrl;
+    return this.cleanUrl(this.customApiUrl || this.defaultApiUrl);
   }
 
   isDarkMode = false;
@@ -52,9 +57,9 @@ export class AppComponent implements OnInit {
     const stored = localStorage.getItem('apiUrl');
     const url = stored ?? defaultUrl ?? '';
 
-    this.customApiUrl = url;
+    this.customApiUrl = this.cleanUrl(url);
     this.manualApiInput = '';
-    await this.loadItems(url);
+    await this.loadItems(this.customApiUrl);
   }
 
   async loadConfig(): Promise<string> {
@@ -67,9 +72,9 @@ export class AppComponent implements OnInit {
         apiUrl = `https://${host.replace('-6001', '-5001')}`;
       }
 
-      this.defaultApiUrl = apiUrl;
+      this.defaultApiUrl = this.cleanUrl(apiUrl);
       this.configError = null;
-      return apiUrl;
+      return this.defaultApiUrl;
     } catch (err) {
       this.configError = 'Fehler beim Laden der Konfiguration';
       console.error(err);
@@ -78,8 +83,9 @@ export class AppComponent implements OnInit {
   }
 
   async loadItems(url: string) {
+    const cleanUrl = this.cleanUrl(url);
     try {
-      const items = await this.http.get<Item[]>(`${url}/items`).toPromise();
+      const items = await this.http.get<Item[]>(`${cleanUrl}/items`).toPromise();
       this.items = items ?? [];
       this.configError = null;
     } catch (err) {
@@ -91,9 +97,10 @@ export class AppComponent implements OnInit {
 
   async applyCustomUrl() {
     if (!this.manualApiInput.trim()) return;
-    localStorage.setItem('apiUrl', this.manualApiInput);
-    this.customApiUrl = this.manualApiInput;
-    await this.loadItems(this.manualApiInput);
+    const cleanUrl = this.cleanUrl(this.manualApiInput);
+    localStorage.setItem('apiUrl', cleanUrl);
+    this.customApiUrl = cleanUrl;
+    await this.loadItems(cleanUrl);
   }
 
   async resetUrl() {
@@ -106,21 +113,23 @@ export class AppComponent implements OnInit {
   async switchToBackend(port: string) {
     const host = window.location.hostname;
     const targetUrl = `https://${host.replace('-6001', `-${port}`)}`;
-    localStorage.setItem('apiUrl', targetUrl);
-    this.customApiUrl = targetUrl;
+    const cleanUrl = this.cleanUrl(targetUrl);
+    localStorage.setItem('apiUrl', cleanUrl);
+    this.customApiUrl = cleanUrl;
     this.manualApiInput = '';
-    await this.loadItems(targetUrl);
+    await this.loadItems(cleanUrl);
   }
 
   async addItem() {
+    const cleanUrl = this.getCurrentApiUrl();
     try {
-      await this.http.post(`${this.getCurrentApiUrl()}/items`, {
+      await this.http.post(`${cleanUrl}/items`, {
         name: this.name,
         amount: this.amount,
       }).toPromise();
       this.name = '';
       this.amount = 1;
-      await this.loadItems(this.getCurrentApiUrl());
+      await this.loadItems(cleanUrl);
     } catch (err) {
       this.configError = 'Fehler beim Hinzufügen des Items';
       console.error(err);
@@ -128,13 +137,14 @@ export class AppComponent implements OnInit {
   }
 
   async updateItem() {
+    const cleanUrl = this.getCurrentApiUrl();
     try {
-      await this.http.put(`${this.getCurrentApiUrl()}/items/${this.updateName}`, {
+      await this.http.put(`${cleanUrl}/items/${this.updateName}`, {
         amount: this.updateAmount,
       }).toPromise();
       this.updateName = '';
       this.updateAmount = 1;
-      await this.loadItems(this.getCurrentApiUrl());
+      await this.loadItems(cleanUrl);
     } catch (err) {
       this.configError = 'Fehler beim Aktualisieren des Items';
       console.error(err);
@@ -142,10 +152,11 @@ export class AppComponent implements OnInit {
   }
 
   async deleteItem() {
+    const cleanUrl = this.getCurrentApiUrl();
     try {
-      await this.http.delete(`${this.getCurrentApiUrl()}/items/${this.deleteName}`).toPromise();
+      await this.http.delete(`${cleanUrl}/items/${this.deleteName}`).toPromise();
       this.deleteName = '';
-      await this.loadItems(this.getCurrentApiUrl());
+      await this.loadItems(cleanUrl);
     } catch (err) {
       this.configError = 'Fehler beim Löschen des Items';
       console.error(err);
